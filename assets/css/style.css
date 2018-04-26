@@ -1,5 +1,9 @@
+body {
+    font-weight: bold;
+}
+
 .jumbotron {
-    background-color: rgb(34,50,86);
+    background-color: #223256;
 }
 
 #jumbotronHeader {
@@ -7,6 +11,18 @@
 }
 
 .card-header {
-    background-color: rgb(34,50,86);
+    background-color: #223256;
     color: #ffffff;
+}
+
+.articleTitle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    color: #223256;
+}
+
+.author {
+    font-size: 80%;
+    font-weight: normal;
 }

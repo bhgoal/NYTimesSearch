@@ -35,8 +35,8 @@
               <div class="form-group">
                 <label for="Input2">Number of Records to Retrieve:</label>
                 <select id="article-count" class="custom-select" aria-labelledby="dropdownMenuButton">
-                  <option selected value="1">1</option>
-                  <option value="5" selected>5</option>
+                  <option value="1" selected>1</option>
+                  <option value="5">5</option>
                   <option value="10">10</option>
                 </select>
               </div>
@@ -48,9 +48,9 @@
                 <label for="end-year">End Year (Optional):</label>
                 <input type="text" class="form-control" id="end-year">
               </div>
-              <button type="submit" class="btn btn-default" id="run-search">
+              <button type="button" class="btn btn-default" id="run-search">
                 <i class="fa fa-search"></i> Search</button>
-              <button class="btn btn-default" id="clear">
+              <button type="button" class="btn btn-default" id="clearButton">
                 <i class="fa-fa-trash"></i> Clear Results</button>
             </form>
           </div>
@@ -63,7 +63,7 @@
           <div class="card-body">
             <div class="card articleBox mb-3">
               <div class="card-body article-view">
-                <h3 class="card-title articleTitle mt-2"></h3>
+                <h3 class="card-title articleTitle my-1">Search for articles above!</h3>
                 <p class="card-text author"></p>
               </div>
             </div>
@@ -95,14 +95,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript">
 
-
-
+    // Clears results when Clear button is clicked
+    $("#clearButton").on("click", function (event) {
+      $(".articleBox").html('<div class="card-body article-view"><h3 class="card-title articleTitle my-1">Search for articles above!</h3></div>');
+    });
 
 
 
     // This .on("click") function will trigger the AJAX Call
     $("#run-search").on("click", function (event) {
-
+      $(".articleBox").empty();
       // Preventing the submit button from trying to submit the form
       // We're optionally using a form so the user may hit Enter to search instead of clicking the button
       event.preventDefault();
@@ -156,11 +158,8 @@
         url: queryURL,
         method: "GET"
       }).then(function (response) {
-
-
         for (var i = 0; i < numArticles; i++) {
           console.log(i)
-          
           var newDiv = $("<div class='card-body'> <h3 class='card-title mt-2'id='articleTitle" + i + "'> </h3> <p class='card-text author' id='author" + i + "'></p> </div>");
 
           $(".articleBox").append(newDiv);

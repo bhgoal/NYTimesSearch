@@ -34,7 +34,7 @@
                 <select id="article-count" class="custom-select" aria-labelledby="dropdownMenuButton">
                   <option selected value="1">1</option>
                   <option value="5" selected>5</option>
-                  <option value="10">10</option>
+                  <option value="10" selected>10</option>
                 </select>
               </div>
               <div class="form-group">
@@ -48,7 +48,7 @@
               <button type="submit" class="btn btn-default" id="run-search">
                 <i class="fa fa-search"></i> Search</button>
               <button class="btn btn-default" id="clear">
-                <i class="fa-fa-trash"></i> Clear Results</button>
+                <i class="fa fa-trash"></i> Clear Results</button>
             </form>
           </div>
         </div>
@@ -88,6 +88,8 @@
       // Preventing the submit button from trying to submit the form
       // We're optionally using a form so the user may hit Enter to search instead of clicking the button
       event.preventDefault();
+
+      $(".articleBox").empty();
 
       // Here we grab the text from the input box
       var article = $("#search-term").val();
@@ -143,13 +145,20 @@
         for (var i = 0; i < numArticles; i++) {
           console.log(i)
           
+          
+
           var newDiv = $("<div class='card-body'> <h3 class='card-title mt-2'id='articleTitle" + i + "'> </h3> <p class='card-text author' id='author" + i + "'></p> </div>");
 
           $(".articleBox").append(newDiv);
           $("#articleTitle" + i).append(response.response.docs[i].snippet + "<br>");
           console.log(response.response.docs[i].snippet)
+
+          if (response.response.docs[i].byline) {
           $("#author" + i).append(response.response.docs[i].byline.original + "<br>");
-          console.log(response.response.docs[i].byline.original);
+          console.log(response.response.docs[i].byline.original); } else {
+            $("#author" + i).append("Anonymous <br>");
+          }
+
           // $("#article-view").append(response.response.docs[i].pub_date + "<br>");
           // console.log(response.response.docs[i].pub_date)
         }

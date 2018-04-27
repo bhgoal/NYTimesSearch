@@ -6,50 +6,126 @@
   <title>New York Times Search</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-  </head>
-  <body>
-        <div class="container">
-            <div class="jumbotron" style="background-color: #20315A ; color: white;">
-                <h1 class="text-center">
-                    <strong>
-                    <i class="newspaper"></i>New York Times Search</strong>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <br>
-                    <div class="card">
-                        <div class="card-header">
-                            <strong>
-                            <i class="parameters"></i> Search Parameters</strong>
-                        </div>
-                </div>
-            </div>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron" style="background-color: #20315A ; color: white;">
+      <h1 class="text-center">
+        <strong>
+          <i class="newspaper"></i>New York Times Search</strong>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <div class="card">
+          <div class="card-header">
+            <strong>
+              <i class="parameters"></i> Search Parameters</strong>
+          </div>
         </div>
-            <form>
-                    <div class="form-group">
-                      <label for="exampleFormControlInput1">Search Term:</label>
-                      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleFormControlSelect1">Number of Records to Retrieve:</label>
-                      <select class="form-control" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleFormControlSelect2">Start Year (Optional)</label>
-                      <select multiple class="form-control" id="exampleFormControlSelect2"></select>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleFormControlTextarea1">End Year (Optional)</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                  </form>
       </div>
+    </div>
+    <form>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Search Term:</label>
+        <input type="text" class="form-control" id="articleSearch">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Number of Records to Retrieve:</label>
+        <select class="form-control" id="dropdownId">
+          <option id="one">1</option>
+          <option id="two">2</option>
+          <option id="three">3</option>
+          <option id="four">4</option>
+          <option id="fivej">5</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlSelect2">Start Year (Optional)</label>
+        <input type="text" class="form-control" id="startYear"></input>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">End Year (Optional)</label>
+        <input type="text" class="form-control" id="endYear" rows="3"></input>
+      </div>
+      <input id="find-article" type="submit" value="Article Search">
+    </form>
+    <div id="article-view"></div>
+  </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+
+
+
+
+
+
+    // This .on("click") function will trigger the AJAX Call
+    $("#find-article").on("click", function (event) {
+
+      // Preventing the submit button from trying to submit the form
+      // We're optionally using a form so the user may hit Enter to search instead of clicking the button
+      event.preventDefault();
+
+      // Here we grab the text from the input box
+      var article = $("#articleSearch").val();
+      var beginDate = $("#startYear").val();
+      var endDate = $("#endYear").val();
+      var numArticles = $("#dropdownId").val();
+      // var numArticles = $('#dropDownId :selected').text();
+
+
+
+      console.log(article)
+      // console.log(ran)
+      console.log(numArticles)
+
+      // Here we construct our URL
+      // var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + article + "&?begin_date=" + beginDate + "&?end_date=" + endDate + "&&api-key=6adc2675fccd44ee9a975e4e793edcbb";
+
+
+      var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+      queryURL += '?' + $.param({
+        'api-key': "6adc2675fccd44ee9a975e4e793edcbb",
+        'begin_date': beginDate,
+        'end_date': endDate,
+      });
+
+      // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
+      // and display it in the div with an id of movie-view
+
+      // YOUR CODE GOES IN THESE DASHES. DO NOT MANUALLY EDIT THE HTML ABOVE
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function (response) {
+
+        
+        for (var i = 0; i < numArticles; i++) {
+          console.log(i)
+          $("#article-view").append(response.response.docs[i].headline.main + "<br>");
+          console.log(response.response.docs[i].headline.main)
+          $("#article-view").append(response.response.docs[i].snippet + "<br>");
+          console.log(response.response.docs[i].snippet)
+          $("#article-view").append(response.response.docs[i].byline.original + "<br>");
+          console.log(response.response.docs[i].byline.original);
+          $("#article-view").append(response.response.docs[i].pub_date + "<br>");
+          console.log(response.response.docs[i].pub_date)
+        }
+      });
+      // =================================================================
+
+
+      // CODE GOES HERE
+
+      // =================================================================
+    });
+  </script>
 
 
 
@@ -63,17 +139,6 @@
 
 
 
+</body>
 
-
-
-
-
-
-
-
-
-
-
-
-  </body>
 </html>

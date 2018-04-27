@@ -7,23 +7,77 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-</head>
-
-<body>
-  <div class="container">
-    <div class="jumbotron" style="background-color: #20315A ; color: white;">
-      <h1 class="text-center">
-        <strong>
-          <i class="newspaper"></i>New York Times Search</strong>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <br>
-        <div class="card">
-          <div class="card-header">
-            <strong>
-              <i class="parameters"></i> Search Parameters</strong>
-          </div>
+  </head>
+  <body>
+    <div class="container">
+            <div class="jumbotron" style="background-color: #20315A ; color: white;">
+                <h1 class="text-center">
+                    <strong>
+                    <i class="fa fa-newspaper-o"></i>New York Times Search</strong>
+            </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card" id="searchContainer"></div>
+                    <div class="card-header">
+                            <strong>
+                            <i class="fa fa-list"></i> Search Parameters</strong>
+                    <div class="card-body">
+                        <form>
+                          <div class="form-group">
+                            <label for="search">Search Term:</label>
+                            <input type="text" class="form-control" id="search-term">
+                          </div>
+                          <div class="form-group">
+                            <label for="Input2">Number of Records to Retrieve:</label>
+                            <select id="article-count" class="custom-select" aria-labelledby="dropdownMenuButton">
+                              <option selected value="1">1</option>
+                              <option value="5" selected>5</option>
+                              <option value="10">10</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="start-year">Start Year (Optional):</label>
+                            <input type="text" class="form-control" id="start-year">
+                          </div>
+                          <div class="form-group">
+                            <label for="end-year">End Year (Optional):</label>
+                            <input type="text" class="form-control" id="end-year">
+                          </div>
+                          <button type="submit" class="btn btn-default" id="run-search">
+                            <i class="fa fa-search"></i> Search</button>
+                          <button class="btn btn-default" id="clear-all">
+                            <i class="fa-fa-trash"></i> Clear Results</button>
+                      </form>
+                    </div>
+                </div>
+                <div class="card" id="articlesContainer">
+                    <h5 class="card-header">Top Articles</h5>
+                    <div class="card-body">
+                      <div class="card articleBox mb-3">
+                        <div class="card-body">
+                          <h3 class="card-title articleTitle mt-2">Article Headline Sample Here</h3>
+                          <p class="card-text author">By SAMPLE AUTHOR</p>
+                        </div>
+                      </div>
+                      <div class="card articleBox mb-3">
+                        <div class="card-body">
+                          <h3 class="card-title articleTitle mt-2">Article Headline Sample Here</h3>
+                          <p class="card-text author">By SAMPLE AUTHOR</p>
+                        </div>
+                      </div>
+                      <div class="card articleBox mb-3">
+                        <div class="card-body">
+                          <h3 class="card-title articleTitle mt-2">Article Headline Sample Here</h3>
+                          <p class="card-text author">By SAMPLE AUTHOR</p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default" id="run-search">
+                    <i class="fa fa-search"></i> Search</button>
+                <button class="btn btn-default" id="clear-all">
+                    <i class="fa fa-trash"></i> Clear Results</button>
+            </form>
         </div>
       </div>
     </div>
@@ -80,6 +134,12 @@
 
 
 
+<<<<<<< HEAD
 </body>
 
+=======
+        
+        
+  </body>
+>>>>>>> 3d9905bc41529faf74c9e0bb6e3cf1b9c4cdaae0
 </html>

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 
 <head>
   <meta charset="UTF-8">
   <title>New York Times Search</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
@@ -13,47 +14,64 @@
     <div class="jumbotron" style="background-color: #20315A ; color: white;">
       <h1 class="text-center">
         <strong>
-          <i class="newspaper"></i>New York Times Search</strong>
+          <i class="fa fa-newspaper-o"></i>New York Times Search</strong>
     </div>
     <div class="row">
-      <div class="col-sm-12">
-        <br>
-        <div class="card">
+      <div class="col-lg-12">
+        <div class="card" id="searchContainer">
           <div class="card-header">
             <strong>
-              <i class="parameters"></i> Search Parameters</strong>
+              <i class="fa fa-list"></i> Search Parameters</strong>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label for="search">Search Term:</label>
+                <input type="text" class="form-control" id="search-term">
+              </div>
+              <div class="form-group">
+                <label for="Input2">Number of Records to Retrieve:</label>
+                <select id="article-count" class="custom-select" aria-labelledby="dropdownMenuButton">
+                  <option selected value="1">1</option>
+                  <option value="5" selected>5</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="start-year">Start Year (Optional):</label>
+                <input type="text" class="form-control" id="start-year">
+              </div>
+              <div class="form-group">
+                <label for="end-year">End Year (Optional):</label>
+                <input type="text" class="form-control" id="end-year">
+              </div>
+              <button type="submit" class="btn btn-default" id="run-search">
+                <i class="fa fa-search"></i> Search</button>
+              <button class="btn btn-default" id="clear">
+                <i class="fa-fa-trash"></i> Clear Results</button>
+            </form>
+          </div>
+        </div>
+        <div class="card" id="articlesContainer">
+          <div class="card-header">
+            <strong>
+              <i class="fa fa-table"></i> Top Articles</strong>
+          </div>
+          <div class="card-body">
+            <div class="card articleBox mb-3">
+              <div class="card-body article-view">
+                <h3 class="card-title articleTitle mt-2"></h3>
+                <p class="card-text author"></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      </form>
     </div>
-    <form>
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Search Term:</label>
-        <input type="text" class="form-control" id="articleSearch">
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlSelect1">Number of Records to Retrieve:</label>
-        <select class="form-control" id="dropdownId">
-          <option id="one">1</option>
-          <option id="two">2</option>
-          <option id="three">3</option>
-          <option id="four">4</option>
-          <option id="fivej">5</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlSelect2">Start Year (Optional)</label>
-        <input type="text" class="form-control" id="startYear"></input>
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">End Year (Optional)</label>
-        <input type="text" class="form-control" id="endYear" rows="3"></input>
-      </div>
-      <input id="find-article" type="submit" value="Article Search">
-    </form>
-    <div id="article-view"></div>
   </div>
-
+  </div>
+  </div>
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -65,20 +83,28 @@
 
 
     // This .on("click") function will trigger the AJAX Call
-    $("#find-article").on("click", function (event) {
+    $("#run-search").on("click", function (event) {
 
       // Preventing the submit button from trying to submit the form
       // We're optionally using a form so the user may hit Enter to search instead of clicking the button
       event.preventDefault();
 
       // Here we grab the text from the input box
-      var article = $("#articleSearch").val();
-      var beginDate = $("#startYear").val();
-      var endDate = $("#endYear").val();
-      var numArticles = $("#dropdownId").val();
+      var article = $("#search-term").val();
+      var beginDate = $("#start-year").val();
+      var endDate = $("#end-year").val();
+      var numArticles = $("#article-count").val();
+      var fillBeginDate = ""
       // var numArticles = $('#dropDownId :selected').text();
 
+      function fullStartYear() {
+        beginDate = beginDate + "0101"
+        return beginDate;
+      }
 
+      function fullEndYear() {
+        endDate = endDate + "1231"
+      }
 
       console.log(article)
       // console.log(ran)
@@ -91,9 +117,17 @@
       var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
       queryURL += '?' + $.param({
         'api-key': "6adc2675fccd44ee9a975e4e793edcbb",
-        'begin_date': beginDate,
-        'end_date': endDate,
+        'q': article,
+        // fillBeginDate,
+        // 'end_date': endDate,
       });
+
+      // if ($("start-year").val()) {
+      //   fillBeginDate = "'begin_date': " + fullStartYear();
+      //   console.log(beginDate)
+      //   console.log(fillBeginDate)
+      //   console.log(fullStartYear)
+      //   }
 
       // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
       // and display it in the div with an id of movie-view
@@ -105,17 +139,19 @@
         method: "GET"
       }).then(function (response) {
 
-        
+
         for (var i = 0; i < numArticles; i++) {
           console.log(i)
-          $("#article-view").append(response.response.docs[i].headline.main + "<br>");
-          console.log(response.response.docs[i].headline.main)
-          $("#article-view").append(response.response.docs[i].snippet + "<br>");
+          
+          var newDiv = $("<div class='card-body'> <h3 class='card-title mt-2'id='articleTitle" + i + "'> </h3> <p class='card-text author' id='author" + i + "'></p> </div>");
+
+          $(".articleBox").append(newDiv);
+          $("#articleTitle" + i).append(response.response.docs[i].snippet + "<br>");
           console.log(response.response.docs[i].snippet)
-          $("#article-view").append(response.response.docs[i].byline.original + "<br>");
+          $("#author" + i).append(response.response.docs[i].byline.original + "<br>");
           console.log(response.response.docs[i].byline.original);
-          $("#article-view").append(response.response.docs[i].pub_date + "<br>");
-          console.log(response.response.docs[i].pub_date)
+          // $("#article-view").append(response.response.docs[i].pub_date + "<br>");
+          // console.log(response.response.docs[i].pub_date)
         }
       });
       // =================================================================
@@ -126,16 +162,6 @@
       // =================================================================
     });
   </script>
-
-
-
-
-
-
-
-
-
-
 
 
 

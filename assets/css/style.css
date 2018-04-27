@@ -45,8 +45,11 @@ body {
 }
 
 .articleBox {
-    background-color: #edf0f1;
     border: none;
+}
+
+.singleArticle {
+    background-color: #edf0f1;
 }
 
 /* .footer {

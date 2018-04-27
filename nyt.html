@@ -35,8 +35,8 @@
               <div class="form-group">
                 <label for="Input2">Number of Records to Retrieve:</label>
                 <select id="article-count" class="custom-select" aria-labelledby="dropdownMenuButton">
-                  <option value="1" selected>1</option>
-                  <option value="5">5</option>
+                  <option value="1">1</option>
+                  <option value="5" selected>5</option>
                   <option value="10">10</option>
                 </select>
               </div>
@@ -62,7 +62,7 @@
           </div>
           <div class="card-body">
             <div class="card articleBox mb-3">
-              <div class="card-body article-view">
+              <div class="card-body singleArticle rounded">
                 <h3 class="card-title articleTitle my-1">Search for articles above!</h3>
                 <p class="card-text author"></p>
               </div>
@@ -160,7 +160,7 @@
       }).then(function (response) {
         for (var i = 0; i < numArticles; i++) {
           console.log(i)
-          var newDiv = $("<div class='card-body'> <h3 class='card-title mt-2'id='articleTitle" + i + "'> </h3> <p class='card-text author' id='author" + i + "'></p> </div>");
+          var newDiv = $("<div class='card-body mb-3 rounded singleArticle'> <h3 class='card-title mt-2'id='articleTitle" + i + "'> </h3> <p class='card-text author' id='author" + i + "'></p> </div>");
 
           $(".articleBox").append(newDiv);
           $("#articleTitle" + i).append(response.response.docs[i].snippet + "<br>");

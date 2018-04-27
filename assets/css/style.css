@@ -1,12 +1,50 @@
+body {
+    font-weight: bold;
+}
+
 .jumbotron {
-    background-color: rgb(34,50,86);
+    background-color: #223256;
 }
 
 #jumbotronHeader {
     color: #ffffff;
 }
 
+.card {
+    margin-bottom: 2rem;
+}
+
+#searchContainer, #articlesContainer {
+    border: 1px solid #223256;
+}
+
 .card-header {
-    background-color: rgb(34,50,86);
+    background-color: #2f3e4e;
     color: #ffffff;
+}
+
+.articleTitle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    color: #223256;
+}
+
+.author {
+    font-size: 80%;
+    font-weight: normal;
+}
+
+.btn {
+    background-color: #97a5a6;
+    color: #ffffff;
+}
+
+.btn:hover {
+    background-color: #7c8c8f;
+}
+
+.articleBox {
+    background-color: #edf0f1;
+    border: none;
 }
